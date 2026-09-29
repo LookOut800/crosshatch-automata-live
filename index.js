@@ -220,7 +220,7 @@ let sketch = function (p) {
   }
 
   function watermark_text() {
-    return 'Crosshatch Automata · Charles Talbot · ' + new Date().toISOString().slice(0, 10);
+    return 'Crosshatch Automata · ' + new Date().toISOString().slice(0, 10);
   }
 
   function draw_watermark() {
