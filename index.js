@@ -7,6 +7,7 @@ import ui from './ui.js';
 import { random_int } from './util.js';
 
 import * as tome from 'https://esm.sh/chromotome@1.19.0';
+import build_svg from './svg-export.js';
 
 const canvas_width = 1100;
 const canvas_height = 1100;
@@ -16,6 +17,9 @@ let options;
 
 let palette;
 let cell_dim;
+let grid;
+
+const EXPORT_DENSITY = { '1x': 2, '2x': 4, '4x': 8 };
 
 let sketch = function (p) {
   p.setup = function () {
@@ -45,9 +49,11 @@ let sketch = function (p) {
       segment_padding: 0,
       display_stroke: false,
       display_fill: true,
+      export_scale: '1x',
+      watermark: false,
     };
 
-    ui(options, draw, randomize_rules);
+    ui(options, draw, randomize_rules, export_png, export_svg_file);
 
     draw();
   };
@@ -70,7 +76,7 @@ let sketch = function (p) {
 
     const pattern = options.top_down ? get_pattern_top_down : get_pattern;
 
-    const grid = pattern(
+    grid = pattern(
       rules,
       palette.colors.length,
       options.init_state,
@@ -209,19 +215,61 @@ let sketch = function (p) {
     options.rule_a = random_int(Math.pow(2, 8));
   }
 
+  function export_filename() {
+    return 'crosshatch-' + options.rule_h + '-' + options.rule_v + '-' + options.rule_d + '-' + options.rule_a;
+  }
+
+  function watermark_text() {
+    return 'Crosshatch Automata · Charles Talbot · ' + new Date().toISOString().slice(0, 10);
+  }
+
+  function draw_watermark() {
+    p.push();
+    p.noStroke();
+    p.fill(palette.stroke || '#000000');
+    p.textFont('monospace');
+    p.textSize(13);
+    p.textAlign(p.RIGHT, p.BASELINE);
+    p.text(watermark_text(), canvas_width - padding, canvas_height - padding + 34);
+    p.pop();
+  }
+
+  function export_png() {
+    const density = EXPORT_DENSITY[options.export_scale] || 2;
+
+    p.pixelDensity(density);
+    draw();
+    if (options.watermark) draw_watermark();
+
+    p.saveCanvas(export_filename(), 'png');
+
+    p.pixelDensity(2);
+    draw();
+  }
+
+  function export_svg_file() {
+    const svg = build_svg(
+      grid,
+      options,
+      palette,
+      cell_dim,
+      canvas_width,
+      canvas_height,
+      padding,
+      options.watermark ? watermark_text() : null
+    );
+
+    const blob = new Blob([svg], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = export_filename() + '.svg';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   p.keyPressed = function () {
-    if (p.keyCode === 80)
-      p.saveCanvas(
-        'crosshatch-' +
-          options.rule_h +
-          '-' +
-          options.rule_v +
-          '-' +
-          options.rule_d +
-          '-' +
-          options.rule_a,
-        'png'
-      );
+    if (p.keyCode === 80) export_png();
   };
 };
 new p5(sketch);

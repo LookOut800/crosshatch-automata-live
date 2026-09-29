@@ -1,9 +1,11 @@
 import GUI from 'https://cdn.jsdelivr.net/npm/lil-gui@0.19/dist/lil-gui.esm.min.js';
 import * as tome from 'https://esm.sh/chromotome@1.19.0';
 
-export default function (options, run, randomize_rules) {
+export default function (options, run, randomize_rules, export_png, export_svg) {
   let ctrls = {
     randomize: randomize_and_run,
+    export_png,
+    export_svg,
   };
 
   const gui = new GUI({ width: 350 });
@@ -53,6 +55,13 @@ export default function (options, run, randomize_rules) {
   color_folder.add(options, 'display_stroke').name('Display stroke').onChange(run);
   color_folder.add(options, 'display_fill').name('Display fill').onChange(run);
   color_folder.open();
+
+  let export_folder = gui.addFolder('Export');
+  export_folder.add(options, 'export_scale', ['1x', '2x', '4x']).name('PNG resolution');
+  export_folder.add(options, 'watermark').name('Watermark');
+  export_folder.add(ctrls, 'export_png').name('Export PNG');
+  export_folder.add(ctrls, 'export_svg').name('Export SVG');
+  export_folder.open();
 
   function randomize_and_run() {
     randomize_rules();
