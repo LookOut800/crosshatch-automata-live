@@ -1,12 +1,12 @@
-import * as dat from 'dat.gui';
-import * as tome from 'chromotome';
+import GUI from 'https://cdn.jsdelivr.net/npm/lil-gui@0.19/dist/lil-gui.esm.min.js';
+import * as tome from 'https://esm.sh/chromotome@1.19.0';
 
 export default function (options, run, randomize_rules) {
   let ctrls = {
     randomize: randomize_and_run,
   };
 
-  const gui = new dat.GUI();
+  const gui = new GUI({ width: 350 });
 
   let layout_folder = gui.addFolder('Layout');
   layout_folder.add(options, 'grid_size_x', 4, 50, 2).name('Segment width').onChange(run);
@@ -53,8 +53,6 @@ export default function (options, run, randomize_rules) {
   color_folder.add(options, 'display_stroke').name('Display stroke').onChange(run);
   color_folder.add(options, 'display_fill').name('Display fill').onChange(run);
   color_folder.open();
-
-  gui.width = 350;
 
   function randomize_and_run() {
     randomize_rules();

@@ -1,12 +1,12 @@
-import get_pattern from './automata';
-import get_pattern_top_down from './automata-top-down';
+import get_pattern from './automata.js';
+import get_pattern_top_down from './automata-top-down.js';
 
-import display_label from './label';
-import ui from './ui';
+import display_label from './label.js';
+import ui from './ui.js';
 
-import { random_int } from './util';
+import { random_int } from './util.js';
 
-import * as tome from 'chromotome';
+import * as tome from 'https://esm.sh/chromotome@1.19.0';
 
 const canvas_width = 1100;
 const canvas_height = 1100;

@@ -5,9 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Crosshatch Automata</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.dom.js"></script>
-    <script src="dist/index.js"></script>
+    <style>
+      body{ margin:0; background:#111; color:#ccc; font:13px/1.5 system-ui, sans-serif; }
+      .hint{ position:fixed; left:16px; bottom:12px; opacity:.6; }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/2.3.4/p5.min.js"></script>
 </head>
-<body style="text-align:center; margin-top:50px;"></body>
+<body>
+    <p class="hint">Press "P" to save the current pattern as a PNG, named after its rule numbers.</p>
+    <script type="module" src="index.js"></script>
+</body>
 </html>

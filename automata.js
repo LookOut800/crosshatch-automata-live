@@ -1,5 +1,5 @@
-import { get_cell_colors } from './combinations';
-import { random_int } from './util';
+import { get_cell_colors } from './combinations.js';
+import { random_int } from './util.js';
 
 export default function (rule_nums, num_of_cols, init_state, width, height) {
   const rule_fns = {
