@@ -1,0 +1,42 @@
+/* Opens up lil-gui's cramped dev-tool defaults (11px font, 4px padding,
+   20px rows) into something more comfortable to actually use, and pulls
+   the accent colors toward the portfolio site's clay/cream palette since
+   this demo is linked directly off it. */
+/* lil-gui injects its own base stylesheet via JS at runtime; targeting
+   .lil-gui.root (specificity 0,2,0) rather than bare .lil-gui (0,1,0)
+   guarantees these overrides win regardless of DOM/load order. */
+.lil-gui.root {
+  --background-color: #1b1815;
+  --text-color: #efe9e1;
+  --title-background-color: #100e0c;
+  --title-text-color: #efe9e1;
+  --widget-color: #3a332c;
+  --hover-color: #4a4038;
+  --focus-color: #554a40;
+  --number-color: #d9825f;
+  --string-color: #a9c49a;
+
+  --font-size: 14px;
+  --input-font-size: 13px;
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+
+  --padding: 10px;
+  --spacing: 9px;
+  --widget-height: 30px;
+  --name-width: 47%;
+  --folder-indent: 12px;
+  --widget-border-radius: 6px;
+}
+
+.lil-gui.root.autoPlace {
+  top: 16px;
+  right: 16px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+}
+
+.lil-gui .title {
+  font-size: 14px;
+  font-weight: 600;
+}

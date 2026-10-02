@@ -7,6 +7,7 @@ import ui from './ui.js';
 import { random_int } from './util.js';
 
 import * as tome from 'https://esm.sh/chromotome@1.19.0';
+import custom_palettes from './custom-palettes.js';
 import build_svg from './svg-export.js';
 
 const canvas_width = 1100;
@@ -44,13 +45,13 @@ let sketch = function (p) {
       rule_v: random_int(Math.pow(2, 8)),
       rule_d: random_int(Math.pow(2, 8)),
       rule_a: random_int(Math.pow(2, 8)),
-      redraw: draw,
       init_state: 'corner_cross',
       segment_padding: 0,
       display_stroke: false,
       display_fill: true,
       export_scale: '1x',
       watermark: false,
+      watermark_name: '',
     };
 
     ui(options, draw, randomize_rules, export_png, export_svg_file);
@@ -59,7 +60,7 @@ let sketch = function (p) {
   };
 
   function draw() {
-    palette = tome.get(options.palette_name);
+    palette = custom_palettes[options.palette_name] || tome.get(options.palette_name);
     cell_dim =
       (canvas_width - 2 * padding - (options.repeats_x - 1) * options.segment_padding) /
       (options.grid_size_x * options.repeats_x);
@@ -220,7 +221,9 @@ let sketch = function (p) {
   }
 
   function watermark_text() {
-    return 'Crosshatch Automata · ' + new Date().toISOString().slice(0, 10);
+    const date = new Date().toISOString().slice(0, 10);
+    const name = options.watermark_name.trim();
+    return name ? `Crosshatch Automata · ${name} · ${date}` : `Crosshatch Automata · ${date}`;
   }
 
   function draw_watermark() {
