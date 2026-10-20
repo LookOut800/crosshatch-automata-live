@@ -14,6 +14,8 @@ palette (via [chromotome](https://github.com/bruno-ol/chromotome)).
 Press **P** to save the current canvas as a PNG, named after its four rule
 numbers.
 
+Live at https://charlesmtalbot.com/crosshatch-automata-live/ (GitHub Pages project site).
+
 ## Origin
 
 This is an active continuation of
